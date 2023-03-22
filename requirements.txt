@@ -1,0 +1,7 @@
+binance==0.3
+numpy==1.19.5
+pandas==1.5.3
+requests==2.18.4
+scikit_learn==1.2.2
+statsmodels==0.13.5
+websocket_client==1.5.1

@@ -29,17 +29,17 @@ data_BTCUSDT = get_klines('BTCUSDT', Client.KLINE_INTERVAL_1MINUTE, 120)
 
 # Только Close price
 y = data_ETHUSDT['Close'].values
-x = data_BTCUSDT['Close'].values #+ data_ETHUSDT[['Open', 'High', 'Low', 'Close', 'Volume']]
+x = data_BTCUSDT['Close'].values
 
 # Тест на коинтеграцию, уровень значимости 0.05
 coint = sm.tsa.stattools.coint(y, x)
 if coint[1] < 0.05:
-    print("The variables are cointegrated.")
+    print("Переменные коинтегрированы.")
 else:
-    print("The variables are not cointegrated.")
+    print("Переменные не коинтегрированы.")
 
 # Новые параметры
-x = x #+ data_ETHUSDT[['Open', 'High', 'Low', 'Close', 'Volume']]
+x = np.hstack([x.reshape(-1, 1), data_ETHUSDT[['Open', 'High', 'Low', 'Volume']].to_numpy()])
 
 # Регрессия
 model = sm.OLS(y, sm.add_constant(x))
